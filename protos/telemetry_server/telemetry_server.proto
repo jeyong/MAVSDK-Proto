@@ -40,6 +40,9 @@ service TelemetryServerService {
     rpc PublishRawImu(PublishRawImuRequest) returns(PublishRawImuResponse) { option (mavsdk.options.async_type) = SYNC; }
     // Publish to 'unix epoch time' updates.
     rpc PublishUnixEpochTime(PublishUnixEpochTimeRequest) returns(PublishUnixEpochTimeResponse) { option (mavsdk.options.async_type) = SYNC; }
+    // Publish to 'Subak Info' updates.
+    rpc PublishSubakInfo(PublishSubakInfoRequest) returns(PublishSubakInfoResponse) { option (mavsdk.options.async_type) = SYNC; }
+
 }
 
 message PublishPositionRequest {
@@ -119,6 +122,10 @@ message PublishUnixEpochTimeRequest {
     uint64 time_us = 1; // The next 'unix epoch time' status
 }
 
+message PublishSubakInfoRequest {
+    SubakInfo subak_info = 1; // The next subak_info
+}
+
 message PublishPositionResponse {
     TelemetryServerResult telemetry_server_result = 1;
 }
@@ -176,6 +183,11 @@ message PublishRawImuResponse {
 message PublishUnixEpochTimeResponse {
     TelemetryServerResult telemetry_server_result = 1;
 }
+
+message PublishSubakInfoResponse {
+    SubakInfo subak_info = 1;
+}
+
 
 // Position type in global coordinates.
 message Position {
@@ -475,4 +487,10 @@ message TelemetryServerResult {
 
     Result result = 1; // Result enum value
     string result_str = 2; // Human-readable English string describing the result
+}
+
+// SubakInfo message type.
+message SubakInfo {
+    float x_value = 1 [(mavsdk.options.default_value)="NaN"];
+    float y_value = 2 [(mavsdk.options.default_value)="NaN"];
 }

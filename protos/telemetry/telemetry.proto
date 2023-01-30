@@ -78,6 +78,8 @@ service TelemetryService {
     rpc SubscribeScaledPressure(SubscribeScaledPressureRequest) returns(stream ScaledPressureResponse) {}
     // Subscribe to 'Heading' updates.
     rpc SubscribeHeading(SubscribeHeadingRequest) returns(stream HeadingResponse) {}
+    // Subscribe to 'Subak Info' updates.
+    rpc SubscribeSubakInfo(SubscribeSubakInfoRequest) returns(stream SubakInfoResponse) {}
 
     // Set rate to 'position' updates.
     rpc SetRatePosition(SetRatePositionRequest) returns(SetRatePositionResponse) {}
@@ -291,6 +293,11 @@ message ScaledPressureResponse {
 message SubscribeHeadingRequest {}
 message HeadingResponse {
     Heading heading_deg = 1; // The next heading (yaw) in degrees
+}
+
+message SubscribeSubakInfoRequest {}
+message SubakInfoResponse {
+    SubakInfo subak_info = 1; // The next 'Subak Info' state. 
 }
 
 message SetRatePositionRequest {
@@ -810,4 +817,10 @@ message TelemetryResult {
 
     Result result = 1; // Result enum value
     string result_str = 2; // Human-readable English string describing the result
+}
+
+// SubakInfo message type.
+message SubakInfo {
+    float x_value = 1 [(mavsdk.options.default_value)="NaN"];
+    float y_value = 2 [(mavsdk.options.default_value)="NaN"];
 }
