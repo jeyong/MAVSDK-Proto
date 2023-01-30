@@ -185,7 +185,7 @@ message PublishUnixEpochTimeResponse {
 }
 
 message PublishSubakInfoResponse {
-    SubakInfo subak_info = 1;
+    TelemetryServerResult telemetry_server_result = 1;
 }
 
 
